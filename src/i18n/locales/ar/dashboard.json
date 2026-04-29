@@ -1,0 +1,22 @@
+{
+  "title":    "لوحة التحكم",
+  "subtitle": "نظرة عامة على أعمالك",
+  "stats": {
+    "activeListings":  "إعلانات نشطة",
+    "pendingQuotes":   "عروض أسعار معلقة",
+    "acceptedQuotes":  "عروض مقبولة",
+    "revenue":         "الإيرادات"
+  },
+  "chart": {
+    "listings": "الإعلانات",
+    "quotes":   "العروض",
+    "revenue":  "الإيرادات",
+    "months": {
+      "Jan": "يناير", "Feb": "فبراير", "Mar": "مارس",
+      "Apr": "أبريل", "May": "مايو",  "Jun": "يونيو"
+    }
+  },
+  "recentListings": "إعلاناتي الأخيرة",
+  "noListings":     "لا توجد إعلانات بعد",
+  "viewAll":        "عرض الكل"
+}

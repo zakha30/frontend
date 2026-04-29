@@ -1,0 +1,23 @@
+{
+  "title":    "Classifieds",
+  "subtitle": "Buy and sell",
+  "postAd":   "Post Ad",
+  "tabs": {
+    "all":      "All",
+    "jobs":     "Jobs",
+    "services": "Services"
+  },
+  "fields": {
+    "title":       "Ad Title",
+    "description": "Description",
+    "category":    "Category",
+    "adType":      "Ad Type",
+    "price":       "Price",
+    "province":    "Province"
+  },
+  "priceOnRequest": "Price on request",
+  "empty": {
+    "title":       "No ads",
+    "description": "No classifieds found"
+  }
+}

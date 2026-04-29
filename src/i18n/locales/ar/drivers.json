@@ -1,0 +1,26 @@
+{
+  "title":         "السائقون",
+  "subtitle":      "{{count}} سائق في قائمتك",
+  "inviteDriver":  "دعوة سائق",
+  "filterAll":     "الكل",
+  "filterActive":  "نشط",
+  "filterOnTrip":  "في رحلة",
+  "filterInactive":"غير نشط",
+  "fields": {
+    "name":          "الاسم الكامل",
+    "email":         "البريد الإلكتروني",
+    "phone":         "رقم الهاتف",
+    "licenseNumber": "رقم الرخصة",
+    "location":      "الموقع",
+    "rating":        "التقييم",
+    "trips":         "رحلة مكتملة"
+  },
+  "modal": {
+    "addTitle": "دعوة سائق جديد",
+    "editTitle":"تعديل بيانات السائق"
+  },
+  "empty": {
+    "title":       "لا يوجد سائقون",
+    "description": "أضف سائقاً للبدء"
+  }
+}

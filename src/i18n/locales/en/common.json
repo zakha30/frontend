@@ -1,0 +1,69 @@
+{
+  "nav": {
+    "fleet":        "Fleet",
+    "drivers":      "Drivers",
+    "jobs":         "Jobs",
+    "classifieds":  "Classifieds",
+    "forum":        "Forum",
+    "loads":        "Loads",
+    "directory":    "Directory",
+    "dashboard":    "Dashboard",
+    "reports":      "Reports",
+    "notifications":"Notifications",
+    "trips":        "Trips",
+    "bookings":     "Bookings"
+  },
+  "actions": {
+    "signIn":     "Sign In",
+    "signOut":    "Sign Out",
+    "register":   "Register",
+    "getStarted": "Get Started",
+    "viewAll":    "View All",
+    "save":       "Save",
+    "cancel":     "Cancel",
+    "delete":     "Delete",
+    "edit":       "Edit",
+    "add":        "Add",
+    "search":     "Search…",
+    "filter":     "Filter",
+    "close":      "Close",
+    "confirm":    "Confirm",
+    "submit":     "Submit",
+    "back":       "Back",
+    "next":       "Next"
+  },
+  "status": {
+    "active":   "Active",
+    "inactive": "Inactive",
+    "onTrip":   "On Trip",
+    "pending":  "Pending",
+    "accepted": "Accepted",
+    "rejected": "Rejected",
+    "loading":  "Loading..."
+  },
+  "labels": {
+    "email":       "Email",
+    "password":    "Password",
+    "name":        "Name",
+    "phone":       "Phone",
+    "location":    "Location",
+    "date":        "Date",
+    "price":       "Price",
+    "category":    "Category",
+    "description": "Description",
+    "title":       "Title"
+  },
+  "empty": {
+    "noData":    "No data available",
+    "noResults": "No results found"
+  },
+  "auth": {
+  "loginRequired":    "Sign in to perform this action",
+  "loginToPost":      "Sign in to post",
+  "loginToAdd":       "Sign in to add",
+  "loginToSubmit":    "Sign in to submit a quote",
+  "loginToContact":   "Sign in to view contact details"
+},
+  "brand":   "TransHub",
+  "tagline": "Africa's Transport Platform"
+}

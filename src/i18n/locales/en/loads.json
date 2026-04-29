@@ -1,0 +1,16 @@
+{
+  "title":       "Available Loads",
+  "subtitle":    "Browse loads and submit quotes",
+  "submitQuote": "Submit Quote",
+  "fields": {
+    "origin":      "Origin",
+    "destination": "Destination",
+    "weight":      "Weight (tons)",
+    "cargo":       "Cargo Type",
+    "date":        "Shipment Date"
+  },
+  "empty": {
+    "title":       "No loads",
+    "description": "No loads available right now"
+  }
+}

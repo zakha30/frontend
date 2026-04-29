@@ -1,0 +1,35 @@
+{
+  "title":      "إدارة الأسطول",
+  "subtitle":   "مركباتك المسجلة",
+  "addVehicle": "إضافة مركبة",
+  "fields": {
+    "regNumber":   "رقم اللوحة",
+    "make":        "الشركة المصنعة",
+    "model":       "الطراز",
+    "year":        "سنة الصنع",
+    "status":      "الحالة",
+    "category":    "الفئة",
+    "truckType":   "نوع الشاحنة",
+    "trailerType": "نوع المقطورة",
+    "payload":     "الحمولة (طن)",
+    "province":    "المنطقة",
+    "city":        "المدينة",
+    "crossBorder": "قادر على العبور الحدودي",
+    "contactEmail":"البريد الإلكتروني للتواصل",
+    "contactPhone":"رقم الهاتف للتواصل",
+    "dailyRate":   "السعر اليومي",
+    "currency":    "العملة",
+    "description": "الوصف",
+    "imageUrl":    "رابط الصورة",
+    "tier":        "مستوى العضوية"
+  },
+  "modal": {
+    "addTitle":  "إضافة مركبة جديدة",
+    "editTitle": "تعديل بيانات المركبة"
+  },
+  "empty": {
+    "title":       "لا توجد مركبات",
+    "description": "أضف مركبتك الأولى للبدء"
+  },
+  "page": "صفحة {{current}} من {{total}}"
+}

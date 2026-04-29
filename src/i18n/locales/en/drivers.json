@@ -1,0 +1,26 @@
+{
+  "title":          "Drivers",
+  "subtitle":       "{{count}} drivers in your roster",
+  "inviteDriver":   "Invite Driver",
+  "filterAll":      "All",
+  "filterActive":   "Active",
+  "filterOnTrip":   "On Trip",
+  "filterInactive": "Inactive",
+  "fields": {
+    "name":          "Full Name",
+    "email":         "Email",
+    "phone":         "Phone",
+    "licenseNumber": "License Number",
+    "location":      "Location",
+    "rating":        "Rating",
+    "trips":         "trips completed"
+  },
+  "modal": {
+    "addTitle":  "Invite New Driver",
+    "editTitle": "Edit Driver"
+  },
+  "empty": {
+    "title":       "No drivers yet",
+    "description": "Add a driver to get started"
+  }
+}

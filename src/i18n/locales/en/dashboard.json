@@ -1,0 +1,22 @@
+{
+  "title":    "Dashboard",
+  "subtitle": "Your business at a glance",
+  "stats": {
+    "activeListings": "Active Listings",
+    "pendingQuotes":  "Pending Quotes",
+    "acceptedQuotes": "Accepted Quotes",
+    "revenue":        "Revenue"
+  },
+  "chart": {
+    "listings": "Listings",
+    "quotes":   "Quotes",
+    "revenue":  "Revenue",
+    "months": {
+      "Jan": "Jan", "Feb": "Feb", "Mar": "Mar",
+      "Apr": "Apr", "May": "May", "Jun": "Jun"
+    }
+  },
+  "recentListings": "My Recent Listings",
+  "noListings":     "No listings yet",
+  "viewAll":        "View All"
+}

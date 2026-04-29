@@ -1,0 +1,35 @@
+{
+  "title":      "Fleet Management",
+  "subtitle":   "Your registered vehicles",
+  "addVehicle": "Add Vehicle",
+  "fields": {
+    "regNumber":   "Registration Number",
+    "make":        "Make",
+    "model":       "Model",
+    "year":        "Year",
+    "status":      "Status",
+    "category":    "Category",
+    "truckType":   "Truck Type",
+    "trailerType": "Trailer Type",
+    "payload":     "Payload (tons)",
+    "province":    "Province",
+    "city":        "City",
+    "crossBorder": "Cross-border capable",
+    "contactEmail":"Contact Email",
+    "contactPhone":"Contact Phone",
+    "dailyRate":   "Daily Rate",
+    "currency":    "Currency",
+    "description": "Description",
+    "imageUrl":    "Image URL",
+    "tier":        "Membership Tier"
+  },
+  "modal": {
+    "addTitle":  "Add New Vehicle",
+    "editTitle": "Edit Vehicle"
+  },
+  "empty": {
+    "title":       "No vehicles yet",
+    "description": "Add your first vehicle to get started"
+  },
+  "page": "Page {{current}} of {{total}}"
+}

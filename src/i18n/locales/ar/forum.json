@@ -1,0 +1,21 @@
+{
+  "title":      "المنتدى",
+  "subtitle":   "ناقش وشارك",
+  "newTopic":   "موضوع جديد",
+  "categories": {
+    "label":   "الفئات",
+    "all":     "الكل",
+    "general": "عام",
+    "market":  "السوق",
+    "fraud":   "بلاغات احتيال"
+  },
+  "fields": {
+    "title":    "عنوان الموضوع",
+    "content":  "المحتوى",
+    "category": "الفئة"
+  },
+  "empty": {
+    "title":       "لا توجد مواضيع",
+    "description": "كن أول من يبدأ نقاشاً"
+  }
+}

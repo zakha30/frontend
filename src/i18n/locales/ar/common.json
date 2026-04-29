@@ -1,0 +1,69 @@
+{
+  "nav": {
+    "fleet":       "الأسطول",
+    "drivers":     "السائقون",
+    "jobs":        "الوظائف",
+    "classifieds": "الإعلانات المبوبة",
+    "forum":       "المنتدى",
+    "loads":       "الشحنات",
+    "directory":   "الدليل",
+    "dashboard":   "لوحة التحكم",
+    "reports":     "التقارير",
+    "notifications":"الإشعارات",
+    "trips":       "الرحلات",
+    "bookings":    "الحجوزات"
+  },
+  "actions": {
+    "signIn":      "تسجيل الدخول",
+    "signOut":     "تسجيل الخروج",
+    "register":    "إنشاء حساب",
+    "getStarted":  "ابدأ الآن",
+    "viewAll":     "عرض الكل",
+    "save":        "حفظ",
+    "cancel":      "إلغاء",
+    "delete":      "حذف",
+    "edit":        "تعديل",
+    "add":         "إضافة",
+    "search":      "بحث...",
+    "filter":      "تصفية",
+    "close":       "إغلاق",
+    "confirm":     "تأكيد",
+    "submit":      "إرسال",
+    "back":        "رجوع",
+    "next":        "التالي"
+  },
+  "status": {
+    "active":    "نشط",
+    "inactive":  "غير نشط",
+    "onTrip":    "في رحلة",
+    "pending":   "معلق",
+    "accepted":  "مقبول",
+    "rejected":  "مرفوض",
+    "loading":   "جارٍ التحميل..."
+  },
+  "labels": {
+    "email":    "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "name":     "الاسم",
+    "phone":    "رقم الهاتف",
+    "location": "الموقع",
+    "date":     "التاريخ",
+    "price":    "السعر",
+    "category": "الفئة",
+    "description":"الوصف",
+    "title":    "العنوان"
+  },
+  "empty": {
+    "noData":      "لا توجد بيانات",
+    "noResults":   "لا توجد نتائج"
+  },
+  "auth": {
+  "loginRequired":    "سجّل دخولك للقيام بهذا الإجراء",
+  "loginToPost":      "سجّل دخولك للنشر",
+  "loginToAdd":       "سجّل دخولك للإضافة",
+  "loginToSubmit":    "سجّل دخولك لتقديم عرض سعر",
+  "loginToContact":   "سجّل دخولك لعرض بيانات الاتصال"
+},
+  "brand": "ترانس هاب",
+  "tagline": "منصة النقل في أفريقيا"
+}

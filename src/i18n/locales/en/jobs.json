@@ -1,0 +1,18 @@
+{
+  "title":    "Jobs",
+  "subtitle": "Find jobs or post openings",
+  "postJob":  "Post Job",
+  "tabs": {
+    "seeking":  "Seeking",
+    "offering": "Offering"
+  },
+  "fields": {
+    "title":       "Job Title",
+    "description": "Description",
+    "province":    "Province"
+  },
+  "empty": {
+    "title":       "No jobs",
+    "description": "No job listings found"
+  }
+}

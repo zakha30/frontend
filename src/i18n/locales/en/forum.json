@@ -1,0 +1,21 @@
+{
+  "title":    "Forum",
+  "subtitle": "Discuss and share",
+  "newTopic": "New Topic",
+  "categories": {
+    "label":   "Categories",
+    "all":     "All",
+    "general": "General",
+    "market":  "Market",
+    "fraud":   "Fraud Reports"
+  },
+  "fields": {
+    "title":    "Topic Title",
+    "content":  "Content",
+    "category": "Category"
+  },
+  "empty": {
+    "title":       "No topics yet",
+    "description": "Be the first to start a discussion"
+  }
+}

@@ -1,0 +1,112 @@
+{
+    "welcome": {
+    "title":    "Welcome to TransHub",
+    "subtitle": "Your complete logistics management platform"
+  },
+  "stats": {
+    "activeListings":  "Active Listings",
+    "pendingQuotes":   "Pending Quotes",
+    "acceptedQuotes":  "Accepted Quotes",
+    "revenue":         "Revenue"
+  },
+  "hero": {
+    "badge":    "South Africa's #1 Transport Platform",
+    "title":    "The complete platform for",
+    "titleHighlight": "transport professionals",
+    "subtitle": "Manage your fleet, connect with drivers, find loads, post classifieds, and grow your transport business — all in one place.",
+    "ctaPrimary":   "Create Free Account",
+    "ctaSecondary": "Browse Loads"
+  },
+  "trust": {
+    "operators": "Verified Operators",
+    "routes":    "Countries Covered",
+    "loads":     "Loads Moved Monthly",
+    "rating":    "Average Rating"
+  },
+  "sections": {
+    "heading":    "Everything your transport business needs",
+    "subheading": "One platform, all the tools. Built specifically for the African road transport industry.",
+    "fleet": {
+      "title":       "Fleet Management",
+      "description": "Track your entire truck fleet, schedule maintenance, and manage vehicle hirings from one dashboard.",
+      "stats": { "tracked": "Vehicles Tracked", "active": "Active", "hire": "For Hire" }
+    },
+    "drivers": {
+      "title":       "Driver Profiles",
+      "description": "Manage driver certifications, trip history, and availability. Find qualified drivers instantly.",
+      "stats": { "total": "Total Drivers", "available": "Available", "onTrip": "On Trip" }
+    },
+    "loads": {
+      "title":       "Available Loads",
+      "description": "Browse freight loads, submit quotes, and win contracts. Real-time load board with instant notifications.",
+      "stats": { "open": "Open Loads", "quotes": "Quotes Sent", "won": "Won" }
+    },
+    "jobs": {
+      "title":       "Jobs Board",
+      "description": "Post driver job offers or find your next opportunity. Connects employers and professional drivers.",
+      "stats": { "seekers": "Job Seekers", "vacancies": "Vacancies", "week": "This Week" }
+    },
+    "classifieds": {
+      "title":       "Classifieds",
+      "description": "Buy and sell trucks, trailers, and equipment. Verified listings with secure contact options.",
+      "stats": { "active": "Active Ads", "today": "New Today", "cats": "Categories" }
+    },
+    "forum": {
+      "title":       "Industry Forum",
+      "description": "Connect with fellow transporters, share knowledge, and discuss what matters to the industry.",
+      "stats": { "topics": "Topics", "posts": "Posts", "members": "Members" }
+    }
+  },
+  "blog": {
+    "heading":    "Latest Industry Insights",
+    "subheading": "Tips, guides, and news from the transport world",
+    "viewAll":    "View All",
+    "readTime":   "{{time}} min read",
+    "by":         "By"
+  },
+  "quickActions": {
+    "findLoads":       "Find Loads",
+    "postClassified":  "Post Classified",
+    "startDiscussion": "Start Discussion",
+    "addBusiness":     "Add Business"
+  },
+  "cta": {
+    "heading":    "Ready to grow your transport business?",
+    "subheading": "Join thousands of drivers, fleet owners, and logistics companies already using TransHub.",
+    "free":      "Start Free",
+    "loads":     "Browse Loads",
+    "jobs":      "Find Jobs",
+    "forum":     "Join Forum"
+  },
+  "footer": {
+    "tagline": "Africa's Transport Platform",
+    "rights":  "All rights reserved"
+  },
+  "posts": {
+    "1": {
+      "title":    "The Future of Electric Trucks in South Africa",
+      "excerpt":  "Exploring challenges and opportunities for EV adoption in the local transport industry.",
+      "author":   "TransHub Team",
+      "date":     "Jan 15, 2024",
+      "category": "Industry",
+      "readTime": "5"
+    },
+    "2": {
+      "title":    "Cross-Border Logistics: Smooth Customs Tips",
+      "excerpt":  "Essential guide to navigating customs when transporting goods across SADC borders.",
+      "author":   "John Smith",
+      "date":     "Jan 12, 2024",
+      "category": "Guide",
+      "readTime": "8"
+    },
+    "3": {
+      "title":    "Fleet Maintenance Best Practices for 2024",
+      "excerpt":  "Keep your vehicles running efficiently with proven maintenance strategies.",
+      "author":   "Sarah Johnson",
+      "date":     "Jan 10, 2024",
+      "category": "Tips",
+      "readTime": "6"
+    }
+  }
+  
+}
