@@ -142,6 +142,7 @@ export default function Fleet() {
   };
 
   // ── Save ──────────────────────────────────────────────────────────────────
+    // ── Save ───────────────────────────────────────────────────────────
   const handleSave = async () => {
     if (!form.registrationNumber || !form.make || !form.model || !form.contactEmail) {
       toast.error('Registration, make, model and contact email are required.');
@@ -149,39 +150,48 @@ export default function Fleet() {
     }
     setSaving(true);
     try {
-      let uploadedImageUrl: string | undefined = form.imageUrl?.trim() || undefined;
-
-      if (imageFile) {
-        const formData = new FormData();
-        formData.append('file', imageFile);
-        const uploadRes = await vehiclesApi.uploadImage(formData);
-        uploadedImageUrl = uploadRes.url;
-      }
-
-      const payload: CreateVehicleDto = {     // ← inside handleSave
+      const payload: CreateVehicleDto = {
         ...form,
-        imageUrl:     uploadedImageUrl            || undefined,
-        description:  form.description?.trim()   || undefined,
-        trailerType:  form.trailerType?.trim()    || undefined,
-        contactPhone: form.contactPhone?.trim()   || undefined,
-        city:         form.city?.trim()           || undefined,
+        imageUrl: undefined,  // Don't include image URL yet
+        description: form.description?.trim() || undefined,
+        trailerType: form.trailerType?.trim() || undefined,
+        contactPhone: form.contactPhone?.trim() || undefined,
+        city: form.city?.trim() || undefined,
       };
 
+      let vehicleData: VehicleResponseDto;
+
+      // Step 1: Create or update the vehicle
       if (editing) {
-        const updated = await vehiclesApi.update(editing.id, payload);
-        setVehicles(vs => vs.map(v => v.id === updated.id ? updated : v));
+        vehicleData = await vehiclesApi.update(editing.id, payload);
+        setVehicles(vs => vs.map(v => v.id === vehicleData.id ? vehicleData : v));
         toast.success('Vehicle updated.');
       } else {
-        const created = await vehiclesApi.create(payload);
-        setVehicles(vs => [created, ...vs]);
+        vehicleData = await vehiclesApi.create(payload);
+        setVehicles(vs => [vehicleData, ...vs]);
         setTotal(n => n + 1);
-        toast.success('Vehicle added.');
+        toast.success('Vehicle created.');
+      }
+
+      // Step 2: Upload image if selected (AFTER vehicle is created)
+      if (imageFile) {
+        try {
+          const formData = new FormData();
+          formData.append('file', imageFile);
+          
+          // Now upload the image with the vehicle ID
+          await vehiclesApi.uploadImage(vehicleData.id, formData);
+          toast.success('Image uploaded successfully.');
+        } catch (imageError) {
+          console.error('Image upload failed:', imageError);
+          toast.error('Image upload failed, but vehicle was saved.');
+        }
       }
 
       setImageFile(null);
       setImagePreview(null);
       setShowModal(false);
-    } catch {
+    } catch (error) {
       // error toast handled by axios interceptor
     } finally {
       setSaving(false);

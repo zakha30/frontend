@@ -1,19 +1,23 @@
 import { useState } from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   Zap, Menu, X, Truck, Users, Package, Tag,
   Briefcase, MessageCircle, Building2, BarChart3,
-  LogIn, UserPlus,
+  LogIn, UserPlus, LogOut, Bell,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
+import { authApi } from '../../api/auth';
 import { LanguageToggle } from './languageToggle';
 
 export const PublicLayout = () => {
   const { t } = useTranslation('common');
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, clearAuth } = useAuthStore();
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
 
   const NAV = [
     { to: '/fleet',       label: t('nav.fleet'),       icon: Truck },
@@ -24,6 +28,18 @@ export const PublicLayout = () => {
     { to: '/forum',       label: t('nav.forum'),       icon: MessageCircle },
     { to: '/directory',   label: t('nav.directory'),   icon: Building2 },
   ];
+
+  const handleLogout = async () => {
+    setLoggingOut(true);
+    try {
+      await authApi.logout();
+    } finally {
+      clearAuth();
+      navigate('/');
+      setLoggingOut(false);
+      setMobileOpen(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-surface">
@@ -64,13 +80,37 @@ export const PublicLayout = () => {
               <LanguageToggle />
 
               {isAuthenticated ? (
-                <Link
-                  to="/dashboard"
-                  className="btn-primary text-sm px-3 py-2 flex items-center gap-1.5"
-                >
-                  <BarChart3 size={15} />
-                  {t('nav.dashboard')}
-                </Link>
+                <>
+                  {/* Notifications */}
+                  <Link
+                    to="/notifications"
+                    className="p-2 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-surface-hover transition-colors"
+                  >
+                    <Bell size={18} />
+                  </Link>
+
+                  {/* Dashboard */}
+                  <Link
+                    to="/dashboard"
+                    className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium
+                               text-slate-500 hover:text-slate-800 hover:bg-surface-hover transition-colors"
+                  >
+                    <BarChart3 size={15} />
+                    {t('nav.dashboard')}
+                  </Link>
+
+                  {/* Sign Out Button ✨ NEW */}
+                  <button
+                    onClick={handleLogout}
+                    disabled={loggingOut}
+                    className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm
+                               font-semibold text-red-500 border border-red-200 bg-red-50
+                               hover:bg-red-100 hover:border-red-300 transition-all disabled:opacity-50"
+                  >
+                    <LogOut size={15} />
+                    {loggingOut ? '...' : t('actions.signOut')}
+                  </button>
+                </>
               ) : (
                 <>
                   {/* Login button — always visible */}
@@ -87,7 +127,8 @@ export const PublicLayout = () => {
                   {/* Register button */}
                   <Link
                     to="/register"
-                    className="btn-primary text-sm px-3 py-2 flex items-center gap-1.5"
+                    className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold
+                               text-white bg-brand-600 hover:bg-brand-700 transition-all shadow-sm"
                   >
                     <UserPlus size={15} />
                     {t('actions.register')}
@@ -124,13 +165,40 @@ export const PublicLayout = () => {
               <div className="pt-3 border-t border-surface-border space-y-2">
                 <LanguageToggle />
                 {isAuthenticated ? (
-                  <Link
-                    to="/dashboard"
-                    className="btn-primary w-full justify-center"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    <BarChart3 size={16} /> {t('nav.dashboard')}
-                  </Link>
+                  <>
+                    {/* Mobile: Notifications */}
+                    <Link
+                      to="/notifications"
+                      onClick={() => setMobileOpen(false)}
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium
+                                 text-slate-500 hover:text-slate-800 hover:bg-surface-hover"
+                    >
+                      <Bell size={18} /> {t('nav.notifications')}
+                    </Link>
+
+                    {/* Mobile: Dashboard */}
+                    <Link
+                      to="/dashboard"
+                      className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl
+                                 text-sm font-semibold text-brand-600 border border-brand-200 bg-brand-50
+                                 hover:bg-brand-100 transition-colors"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      <BarChart3 size={16} /> {t('nav.dashboard')}
+                    </Link>
+
+                    {/* Mobile: Sign Out ✨ NEW */}
+                    <button
+                      onClick={() => { setMobileOpen(false); handleLogout(); }}
+                      disabled={loggingOut}
+                      className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl
+                                 text-sm font-semibold text-red-500 border border-red-200 bg-red-50
+                                 hover:bg-red-100 transition-colors disabled:opacity-50"
+                    >
+                      <LogOut size={16} />
+                      {loggingOut ? '...' : t('actions.signOut')}
+                    </button>
+                  </>
                 ) : (
                   <>
                     <Link
@@ -144,7 +212,9 @@ export const PublicLayout = () => {
                     </Link>
                     <Link
                       to="/register"
-                      className="btn-primary w-full justify-center"
+                      className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl
+                                 text-sm font-semibold text-white bg-brand-600
+                                 hover:bg-brand-700 transition-colors"
                       onClick={() => setMobileOpen(false)}
                     >
                       <UserPlus size={16} /> {t('actions.register')}

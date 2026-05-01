@@ -14,13 +14,21 @@ export const vehiclesApi = {
   update: (id: string, data: Partial<CreateVehicleDto>) =>
     apiClient.put<VehicleResponseDto>(`/vehicles/${id}`, data).then(r => r.data),
 
-  uploadImage: (formData: FormData) =>
-  apiClient.post<{ url: string }>('/vehicles/images', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  }).then(r => r.data),
-  // Add to vehiclesApi object:
-search: (params = {}) =>
-  apiClient.get<VehiclePagedResult>('/vehicles/search', { params }).then(r => r.data),
+  // ✨ NEW: Upload image for a specific vehicle (requires fleetId)
+  uploadImage: (vehicleId: string, formData: FormData) =>
+    apiClient.post<{ url: string }>(
+      `/vehicles/${vehicleId}/images`,  // ← matches backend route
+      formData,
+      { headers: { 'Content-Type': 'multipart/form-data' } }
+    ).then(r => r.data),
+
+  getImages: (vehicleId: string) =>
+    apiClient.get(`/vehicles/${vehicleId}/images`).then(r => r.data),
+
+  deleteImage: (imageId: number) =>  // ← int
+    apiClient.delete(`/vehicles/images/${imageId}`).then(r => r.data),
+  search: (params = {}) =>
+    apiClient.get<VehiclePagedResult>('/vehicles/search', { params }).then(r => r.data),
 };
 
 export const notificationsApi = {
@@ -38,7 +46,3 @@ export const plansApi = {
   getAll: () =>
     apiClient.get<PlanDto[]>('/plans').then(r => r.data),
 };
-
-
-
-
