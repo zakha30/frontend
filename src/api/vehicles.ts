@@ -29,6 +29,7 @@ export const vehiclesApi = {
     apiClient.delete(`/vehicles/images/${imageId}`).then(r => r.data),
   search: (params = {}) =>
     apiClient.get<VehiclePagedResult>('/vehicles/search', { params }).then(r => r.data),
+
 };
 
 export const notificationsApi = {

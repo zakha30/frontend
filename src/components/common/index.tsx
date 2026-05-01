@@ -15,7 +15,7 @@ export const FullPageSpinner = () => (
     <Spinner size="lg" />
   </div>
 );
-
+export { ImageZoom } from './ImageZoom';
 // ── Badge ─────────────────────────────────────────────────────────────────────
 export const Badge = ({ status }: { status: string }) => (
   <span className={statusColor(status)}>{status}</span>

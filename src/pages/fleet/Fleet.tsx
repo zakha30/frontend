@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { vehiclesApi } from '../../api/vehicles';
 import {
   PageHeader, Modal, Field, Badge, Pagination,
-  EmptyState, Spinner,
+  EmptyState, Spinner, ImageZoom,
 } from '../../components/common';
 import { AuthGuard } from '../../components/common/AuthGuard';
 import { useAuth } from '../../hooks/useAuth';
@@ -13,60 +13,58 @@ import type {
   VehicleResponseDto, CreateVehicleDto, VehicleCategory, VehicleStatus,
 } from '../../types';
 
-// ── Constants ─────────────────────────────────────────────────────────────────
 const VEHICLE_CATEGORIES: VehicleCategory[] = ['Truck', 'Trailer', 'LCV', 'Bus', 'Other'];
-const VEHICLE_STATUSES:   VehicleStatus[]   = ['Available', 'OnTrip', 'Maintenance', 'Inactive'];
+const VEHICLE_STATUSES: VehicleStatus[] = ['Available', 'OnTrip', 'Maintenance', 'Inactive'];
 const TRUCK_TYPES = ['Flatdeck', 'Tautliner', 'Curtainsider', 'Reefer', 'Tipper', 'Tanker', 'Lowbed', 'Crane', 'Other'];
-const CURRENCIES  = ['ZAR', 'USD', 'EUR', 'GBP', 'BWP', 'ZMW', 'KES', 'NGN'];
+const CURRENCIES = ['ZAR', 'USD', 'EUR', 'GBP', 'BWP', 'ZMW', 'KES', 'NGN'];
 const SA_PROVINCES = [
   'Gauteng', 'Western Cape', 'KwaZulu-Natal', 'Eastern Cape',
   'Limpopo', 'Mpumalanga', 'North West', 'Free State', 'Northern Cape',
 ];
 
 const EMPTY_FORM: CreateVehicleDto = {
-  registrationNumber:   '',
-  make:                 '',
-  model:                '',
-  year:                 new Date().getFullYear(),
-  status:               'Available',
-  Category:             'Truck',
-  truckType:            '',
-  trailerType:          '',
-  payloadTons:          0,
-  province:             '',
-  city:                 '',
+  registrationNumber: '',
+  make: '',
+  model: '',
+  year: new Date().getFullYear(),
+  status: 'Available',
+  Category: 'Truck',
+  truckType: '',
+  trailerType: '',
+  payloadTons: 0,
+  province: '',
+  city: '',
   isCrossBorderCapable: false,
-  contactEmail:         '',
-  contactPhone:         '',
-  dailyRate:            undefined,
-  currency:             'ZAR',
-  description:          '',
-  imageUrl:             '',
-  membershipTier:       'Free',
-  postedByUserId:       '',
+  contactEmail: '',
+  contactPhone: '',
+  dailyRate: undefined,
+  currency: 'ZAR',
+  description: '',
+  imageUrl: '',
+  membershipTier: 'Free',
+  postedByUserId: '',
 };
 
-// ── Backend base URL for image display ───────────────────────────────────────
 const API_BASE = 'https://localhost:7089';
 
 export default function Fleet() {
   const { t } = useTranslation('fleet');
   const { canWrite, user } = useAuth();
 
-  const [vehicles,      setVehicles]      = useState<VehicleResponseDto[]>([]);
-  const [total,         setTotal]         = useState(0);
-  const [page,          setPage]          = useState(1);
-  const [loading,       setLoading]       = useState(true);
-  const [saving,        setSaving]        = useState(false);
-  const [showModal,     setShowModal]     = useState(false);
-  const [editing,       setEditing]       = useState<VehicleResponseDto | null>(null);
-  const [form,          setForm]          = useState<CreateVehicleDto>(EMPTY_FORM);
-  const [imageFile,     setImageFile]     = useState<File | null>(null);       // ← inside component
-  const [imagePreview,  setImagePreview]  = useState<string | null>(null);     // ← inside component
+  const [vehicles, setVehicles] = useState<VehicleResponseDto[]>([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [editing, setEditing] = useState<VehicleResponseDto | null>(null);
+  const [form, setForm] = useState<CreateVehicleDto>(EMPTY_FORM);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [vehicleImages, setVehicleImages] = useState<{ [key: string]: any[] }>({});  // ✨ NEW
 
   const pageSize = 10;
 
-  // ── Load ──────────────────────────────────────────────────────────────────
   const load = useCallback(async () => {
     setLoading(true);
     try {
@@ -83,7 +81,27 @@ export default function Fleet() {
 
   useEffect(() => { load(); }, [load]);
 
-  // ── Modal helpers ─────────────────────────────────────────────────────────
+  // ✨ Load images for each vehicle
+  useEffect(() => {
+    vehicles.forEach(v => {
+      if (!vehicleImages[v.id]) {
+        loadVehicleImages(v.id);
+      }
+    });
+  }, [vehicles, vehicleImages]);
+
+  const loadVehicleImages = async (vehicleId: string) => {
+    try {
+      const images = await vehiclesApi.getImages(vehicleId);
+      setVehicleImages(prev => ({
+        ...prev,
+        [vehicleId]: Array.isArray(images) ? images : []
+      }));
+    } catch (error) {
+      console.error('Failed to load images:', error);
+    }
+  };
+
   const openCreate = () => {
     setEditing(null);
     setForm({ ...EMPTY_FORM, postedByUserId: user?.id ?? '' });
@@ -95,39 +113,38 @@ export default function Fleet() {
   const openEdit = (v: VehicleResponseDto) => {
     setEditing(v);
     setForm({
-      registrationNumber:   v.registrationNumber,
-      make:                 v.make,
-      model:                v.model,
-      year:                 v.year,
-      status:               v.status,
-      Category:             v.Category,
-      truckType:            v.truckType            ?? '',
-      trailerType:          v.trailerType          ?? '',
-      payloadTons:          v.payloadTons,
-      province:             v.province,
-      city:                 v.city                 ?? '',
+      registrationNumber: v.registrationNumber,
+      make: v.make,
+      model: v.model,
+      year: v.year,
+      status: v.status,
+      Category: v.Category,
+      truckType: v.truckType ?? '',
+      trailerType: v.trailerType ?? '',
+      payloadTons: v.payloadTons,
+      province: v.province,
+      city: v.city ?? '',
       isCrossBorderCapable: v.isCrossBorderCapable,
-      contactEmail:         v.contactEmail,
-      contactPhone:         v.contactPhone         ?? '',
-      dailyRate:            v.dailyRate,
-      currency:             v.currency,
-      description:          v.description          ?? '',
-      imageUrl:             v.imageUrl             ?? '',
-      membershipTier:       v.membershipTier,
-      postedByUserId:       v.postedByUserId,
+      contactEmail: v.contactEmail,
+      contactPhone: v.contactPhone ?? '',
+      dailyRate: v.dailyRate,
+      currency: v.currency,
+      description: v.description ?? '',
+      imageUrl: v.imageUrl ?? '',
+      membershipTier: v.membershipTier,
+      postedByUserId: v.postedByUserId,
     });
     setImageFile(null);
     setImagePreview(
       v.imageUrl
         ? v.imageUrl.startsWith('http')
           ? v.imageUrl
-          : `${API_BASE}${v.imageUrl}`   // prepend base URL for relative paths
+          : `${API_BASE}${v.imageUrl}`
         : null
     );
     setShowModal(true);
   };
 
-  // ── Image handler ─────────────────────────────────────────────────────────
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -141,8 +158,6 @@ export default function Fleet() {
     reader.readAsDataURL(file);
   };
 
-  // ── Save ──────────────────────────────────────────────────────────────────
-    // ── Save ───────────────────────────────────────────────────────────
   const handleSave = async () => {
     if (!form.registrationNumber || !form.make || !form.model || !form.contactEmail) {
       toast.error('Registration, make, model and contact email are required.');
@@ -152,7 +167,7 @@ export default function Fleet() {
     try {
       const payload: CreateVehicleDto = {
         ...form,
-        imageUrl: undefined,  // Don't include image URL yet
+        imageUrl: undefined,
         description: form.description?.trim() || undefined,
         trailerType: form.trailerType?.trim() || undefined,
         contactPhone: form.contactPhone?.trim() || undefined,
@@ -161,7 +176,6 @@ export default function Fleet() {
 
       let vehicleData: VehicleResponseDto;
 
-      // Step 1: Create or update the vehicle
       if (editing) {
         vehicleData = await vehiclesApi.update(editing.id, payload);
         setVehicles(vs => vs.map(v => v.id === vehicleData.id ? vehicleData : v));
@@ -173,14 +187,13 @@ export default function Fleet() {
         toast.success('Vehicle created.');
       }
 
-      // Step 2: Upload image if selected (AFTER vehicle is created)
       if (imageFile) {
         try {
           const formData = new FormData();
           formData.append('file', imageFile);
-          
-          // Now upload the image with the vehicle ID
           await vehiclesApi.uploadImage(vehicleData.id, formData);
+          // Reload images for this vehicle
+          await loadVehicleImages(vehicleData.id);
           toast.success('Image uploaded successfully.');
         } catch (imageError) {
           console.error('Image upload failed:', imageError);
@@ -192,13 +205,12 @@ export default function Fleet() {
       setImagePreview(null);
       setShowModal(false);
     } catch (error) {
-      // error toast handled by axios interceptor
+      // error handled by interceptor
     } finally {
       setSaving(false);
     }
   };
 
-  // ── Field helpers ─────────────────────────────────────────────────────────
   const setStr = (k: keyof CreateVehicleDto) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
       setForm(f => ({ ...f, [k]: e.target.value }));
@@ -211,13 +223,11 @@ export default function Fleet() {
     (e: React.ChangeEvent<HTMLInputElement>) =>
       setForm(f => ({ ...f, [k]: e.target.checked }));
 
-  // ── Image URL helper ──────────────────────────────────────────────────────
   const getImageSrc = (url?: string | null) => {
     if (!url) return null;
     return url.startsWith('http') ? url : `${API_BASE}${url}`;
   };
 
-  // ── Render ────────────────────────────────────────────────────────────────
   return (
     <div className="space-y-6">
       <PageHeader
@@ -258,7 +268,7 @@ export default function Fleet() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-surface-border bg-surface">
-                  <th className="th w-16">Photo</th>       {/* ← NEW column */}
+                  <th className="th w-16">Photo</th>
                   <th className="th">{t('fields.regNumber')}</th>
                   <th className="th">{t('fields.make')} / {t('fields.model')}</th>
                   <th className="th">{t('fields.year')}</th>
@@ -274,14 +284,13 @@ export default function Fleet() {
               <tbody>
                 {vehicles.map(v => (
                   <tr key={v.id} className="table-row">
-
-                    {/* ── Photo cell ── NEW */}
+                    {/* ✨ Photo cell with zoom */}
                     <td className="td">
-                      {getImageSrc(v.imageUrl) ? (
-                        <img
-                          src={getImageSrc(v.imageUrl)!}
+                      {vehicleImages[v.id]?.[0] ? (
+                        <ImageZoom
+                          src={getImageSrc(vehicleImages[v.id][0].imagePath) || ''}
                           alt={`${v.make} ${v.model}`}
-                          className="h-10 w-14 rounded-lg object-cover border border-surface-border"
+                          thumbnailClassName="h-10 w-14 rounded-lg object-cover border border-surface-border cursor-pointer"
                         />
                       ) : (
                         <div className="h-10 w-14 rounded-lg bg-slate-100 border border-surface-border flex items-center justify-center">
@@ -338,7 +347,6 @@ export default function Fleet() {
         )}
       </div>
 
-      {/* ── Modal ─────────────────────────────────────────────────────────── */}
       <Modal
         open={showModal}
         onClose={() => setShowModal(false)}
@@ -347,34 +355,34 @@ export default function Fleet() {
         <div className="space-y-4 max-h-[70vh] overflow-y-auto pr-1">
 
           <div className="grid grid-cols-2 gap-3">
-            <Field label={t('fields.regNumber')}  error='required'>
+            <Field label={t('fields.regNumber')} error='required'>
               <input className="input font-mono uppercase" placeholder="ABC 123 GP"
                 value={form.registrationNumber} onChange={setStr('registrationNumber')} />
             </Field>
-            <Field label={t('fields.year')}  error='required'>
+            <Field label={t('fields.year')} error='required'>
               <input className="input font-mono" type="number" min={1980} max={2100}
                 value={form.year} onChange={setNum('year')} />
             </Field>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <Field label={t('fields.make')}  error='required'>
+            <Field label={t('fields.make')} error='required'>
               <input className="input" placeholder="Toyota"
                 value={form.make} onChange={setStr('make')} />
             </Field>
-            <Field label={t('fields.model')}  error='required'>
+            <Field label={t('fields.model')} error='required'>
               <input className="input" placeholder="Hilux"
                 value={form.model} onChange={setStr('model')} />
             </Field>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <Field label="Category"  error='required'>
+            <Field label="Category" error='required'>
               <select className="input" value={form.Category} onChange={setStr('Category')}>
                 {VEHICLE_CATEGORIES.map(c => <option key={c}>{c}</option>)}
               </select>
             </Field>
-            <Field label="Truck Type"  error='required'>
+            <Field label="Truck Type" error='required'>
               <select className="input" value={form.truckType} onChange={setStr('truckType')}>
                 <option value="">Select type</option>
                 {TRUCK_TYPES.map(tt => <option key={tt}>{tt}</option>)}
@@ -387,14 +395,14 @@ export default function Fleet() {
               <input className="input" placeholder="e.g. Flatbed"
                 value={form.trailerType ?? ''} onChange={setStr('trailerType')} />
             </Field>
-            <Field label="Payload (tons)"  error='required'>
+            <Field label="Payload (tons)" error='required'>
               <input className="input" type="number" min={0} step={0.5}
                 value={form.payloadTons} onChange={setNum('payloadTons')} />
             </Field>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <Field label="Province"  error='required'>
+            <Field label="Province" error='required'>
               <select className="input" value={form.province} onChange={setStr('province')}>
                 <option value="">Select province</option>
                 {SA_PROVINCES.map(p => <option key={p}>{p}</option>)}
@@ -462,7 +470,6 @@ export default function Fleet() {
               value={form.description ?? ''} onChange={setStr('description')} />
           </Field>
 
-          {/* Image Upload */}
           <Field label="Vehicle Image">
             <div className="space-y-2">
               {imagePreview ? (
@@ -483,7 +490,7 @@ export default function Fleet() {
               ) : (
                 <label
                   htmlFor="vehicle-image"
-                  className="flex flex-col items-center justify-center w-full h-32 rounded-xl border-2 border-dashed border-surface-border bg-slate-50 hover:bg-slate-100 hover:border-brand-400 transition-all cursor-pointer"
+                  className="flex flex-col items-center justify-center w-full h-32 rounded-xl border-2 border-dashed border-surface-border bg-slate-50 hover:bg-slate-100 hover:border-brand-400 cursor-pointer transition-colors"
                 >
                   <Upload size={24} className="text-slate-400 mb-2" />
                   <span className="text-sm font-medium text-slate-500">Click to upload image</span>
